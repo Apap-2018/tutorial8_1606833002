@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>View Flight Detail</title>
+		<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+		<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	</head>
+	
+	<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<h3 th:text="'Flight Number : ' + ${flight.flightNumber}"></h3>
+	<h3 th:text="'Origin : ' + ${flight.origin}"></h3>
+	<h3 th:text="'Destination : ' + ${flight.destination}"></h3>
+	<h3 th:text="'Time : ' + ${flight.time}"></h3>
+	<hr>
+	<h3 th:text="'Nama pilot : ' + ${flight.pilot.name}"></h3>
+	<h3 th:text="'License number pilot : ' + ${flight.pilot.licenseNumber}"></h3>
+	<br>
+	<form th:action="@{/flight/delete/} + ${flight.id}" method="POST">
+		<button type="submit">Delete this flight</button>
+	</form>
+	<button><a th:href="@{/flight/update/} + ${flight.id}">Update this flight</a></button>
+	</body>
+</html>
