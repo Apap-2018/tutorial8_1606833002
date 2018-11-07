@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.apap.tutorial8.model.PasswordModel;
 import com.apap.tutorial8.model.UserRoleModel;
 import com.apap.tutorial8.service.UserRoleService;
 
@@ -30,13 +29,13 @@ public class UserRoleController {
 	}
 	
 	@RequestMapping(value="/updatePassword", method=RequestMethod.POST)
-	private String updatePasswordSubmit(@ModelAttribute PasswordModel passwordForm, Model model) {
+	private String updatePasswordSubmit(String oldPassword, String newPassword, String confirmPassword, Model model) {
 		UserRoleModel user = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
 		
-		if(passwordForm.getNewPassword().equals(passwordForm.getConfirmPassword())) {
+		if(newPassword.equals(confirmPassword)) {
 			
-			if(userService.isMatch(passwordForm.getOldPassword(), user.getPassword())) {
-				user.setPassword(passwordForm.getNewPassword());
+			if(userService.isMatch(oldPassword, user.getPassword())) {
+				user.setPassword(newPassword);
 				userService.addUser(user);
 				
 				model.addAttribute("msg", "Password " + user.getUsername() + " berhasil diubah");
